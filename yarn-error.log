@@ -44,6 +44,7 @@ npm manifest:
       "express": "^4.17.1",
       "express-http-proxy": "^1.6.0",
       "express-session": "^1.17.1",
+      "express-winston": "^4.2.0",
       "http-proxy-middleware": "^1.0.4",
       "https-proxy-agent": "^5.0.0",
       "lodash.throttle": "^4.1.1",
@@ -3076,7 +3077,7 @@ Lockfile:
     version "0.12.0"
     resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   
-  chalk@^2.0.0, chalk@^2.4.1:
+  chalk@^2.0.0, chalk@^2.4.1, chalk@^2.4.2:
     version "2.4.2"
     resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
     dependencies:
@@ -4445,6 +4446,13 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/express-static-gzip/-/express-static-gzip-2.1.1.tgz#ee3a0eca3f10348bcd214095fbb46f8d0f8cb471"
     dependencies:
       serve-static "^1.14.1"
+  
+  express-winston@^4.2.0:
+    version "4.2.0"
+    resolved "https://registry.yarnpkg.com/express-winston/-/express-winston-4.2.0.tgz#e9d535d52aa4c125a54a29cce132ae2e3633f4fa"
+    dependencies:
+      chalk "^2.4.2"
+      lodash "^4.17.21"
   
   express@^4.17.1:
     version "4.17.1"
@@ -9351,7 +9359,7 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 1
+  Exit code: 2
   Command: sh
   Arguments: -c tsc -p tsconfig.backend.json && NODE_ENV=development node node_dist/backend/server.js
   Directory: /Users/andre.wolden/workspace/ory-kaldstart/kaldstart-frontend

@@ -10,7 +10,7 @@ export const createRoutes = (router: Router): Router => {
     });
 
     // Feilhåndtering
-    router.post('/logg-feil', (req: Request, res: Response) => {
+    router.post('/logg-feil', (_: Request, res: Response) => {
         res.status(200).send();
     });
 
