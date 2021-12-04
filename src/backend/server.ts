@@ -1,15 +1,14 @@
 import path from 'path';
 
 import bodyParser from 'body-parser';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import expressStaticGzip from 'express-static-gzip';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import { hostname, port } from './configuration';
-import { middlewareLogger } from './pkg/logger';
-import { createRoutes } from './router';
+import { buildPath, hostname, port } from './configuration';
+import { createLoginRoute } from './routes/bff/loginRoute';
 
 // eslint-disable-next-line
 const webpackDevConfig = require('../webpack/webpack.dev');
@@ -17,7 +16,7 @@ const webpackDevConfig = require('../webpack/webpack.dev');
 const app = express();
 const router = express.Router();
 
-app.use(middlewareLogger);
+// app.use(middlewareLogger);
 
 if (process.env.NODE_ENV === 'development') {
     const compiler = webpack(webpackDevConfig);
@@ -31,7 +30,9 @@ if (process.env.NODE_ENV === 'development') {
 } else {
     app.use('/assets', expressStaticGzip(path.join(process.cwd(), 'frontend_production'), {}));
 }
-
+/**
+ * Proxy later
+ */
 // app.use(
 //     '/api',
 //     // ensureAuthenticated(authClient),
@@ -39,9 +40,19 @@ if (process.env.NODE_ENV === 'development') {
 //     // doPdfProxy()
 // );
 
-app.use(bodyParser.json({ limit: '200mb' }));
-app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
-app.use('/', createRoutes(router));
+app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
+// app.use('/bff', createBffRoutes(router));
+// app.use('/api', createApiRoutes(router));
+
+app.get('/bff/login', createLoginRoute);
+
+/**
+ * serve index.html
+ */
+app.get('*', (_: Request, res: Response) => {
+    res.sendFile('index.html', { root: path.join(process.cwd(), buildPath) });
+});
 
 app.listen(port, hostname, () => {
     console.log(`Listening on http://${hostname}:${port}`);

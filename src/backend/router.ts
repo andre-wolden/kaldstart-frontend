@@ -3,21 +3,17 @@ import path from 'path';
 import { Response, Request, Router } from 'express';
 
 import { buildPath } from './configuration';
+import { createMessagesRoute } from './routes/api';
+import { createLoginRoute } from './routes/bff/loginRoute';
 
-export const createRoutes = (router: Router): Router => {
-    router.get('/error', (_: Request, res: Response) => {
-        res.sendFile('error.html', { root: path.join(`assets/`) });
-    });
+// export const createBffRoutes = (router: Router): Router => {
+//     router.get('/login', createLoginRoute);
+//
+//     return router;
+// };
 
-    // Feilhåndtering
-    router.post('/logg-feil', (_: Request, res: Response) => {
-        res.status(200).send();
-    });
-
-    // APP
-    router.get('*', (_: Request, res: Response) => {
-        res.sendFile('index.html', { root: path.join(process.cwd(), buildPath) });
-    });
+export const createApiRoutes = (router: Router): Router => {
+    router.get('/messages', createMessagesRoute);
 
     return router;
 };

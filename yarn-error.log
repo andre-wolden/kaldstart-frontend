@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js start:dev
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js run start:dev
 
 PATH: 
   /Users/andre.wolden/.cabal/bin:/Users/andre.wolden/.ghcup/bin:/usr/local/opt/postgresql@11/bin:/Users/andre.wolden/Applications/google-cloud-sdk/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/andre.wolden/Applications/maven/bin:/Applications/Sublime Text.app/Contents/MacOS/Packages:/Library/TeX/texbin:/usr/local/share/dotnet:/usr/local/munki:/opt/X11/bin:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/andre.wolden/afroman/:/usr/local/Cellar/postgresql/10.3/bin
@@ -30,6 +30,8 @@ npm manifest:
     },
     "dependencies": {
       "@axe-core/react": "^4.3.1",
+      "@ory/client": "^0.0.1-alpha.29",
+      "@ory/kratos-client": "^0.8.0-alpha.2",
       "@svgr/webpack": "^5.5.0",
       "autoprefixer": "^10.4.0",
       "axios": "^0.24.0",
@@ -135,7 +137,7 @@ npm manifest:
       "style-loader": "^3.3.0",
       "ts-jest": "^26.5.6",
       "tsconfig-paths-webpack-plugin": "^3.2.0",
-      "typescript": "^4.4.2",
+      "typescript": "4.4.4",
       "typescript-eslint": "^0.0.1-alpha.0",
       "webpack": "^5.64.1",
       "webpack-cli": "^4.9.1",
@@ -1565,6 +1567,18 @@ Lockfile:
       "@nodelib/fs.scandir" "2.1.5"
       fastq "^1.6.0"
   
+  "@ory/client@^0.0.1-alpha.29":
+    version "0.0.1-alpha.29"
+    resolved "https://registry.yarnpkg.com/@ory/client/-/client-0.0.1-alpha.29.tgz#74a3de701f95ae5beb665574fe4bd3eefa3a4ab0"
+    dependencies:
+      axios "^0.21.1"
+  
+  "@ory/kratos-client@^0.8.0-alpha.2":
+    version "0.8.0-alpha.2"
+    resolved "https://registry.yarnpkg.com/@ory/kratos-client/-/kratos-client-0.8.0-alpha.2.tgz#ad99d2d2a1d99b231b174ad0858fd4dfada5f4d6"
+    dependencies:
+      axios "^0.21.1"
+  
   "@panva/asn1.js@^1.0.0":
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/@panva/asn1.js/-/asn1.js-1.0.0.tgz#dd55ae7b8129e02049f009408b97c61ccf9032f6"
@@ -2662,6 +2676,12 @@ Lockfile:
   axe-core@^4.3.3, axe-core@^4.3.5:
     version "4.3.5"
     resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.5.tgz#78d6911ba317a8262bfee292aeafcc1e04b49cc5"
+  
+  axios@^0.21.1:
+    version "0.21.4"
+    resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
+    dependencies:
+      follow-redirects "^1.14.0"
   
   axios@^0.24.0:
     version "0.24.0"
@@ -4664,7 +4684,7 @@ Lockfile:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/fn.name/-/fn.name-1.1.0.tgz#26cad8017967aea8731bc42961d04a3d5988accc"
   
-  follow-redirects@^1.0.0, follow-redirects@^1.14.4:
+  follow-redirects@^1.0.0, follow-redirects@^1.14.0, follow-redirects@^1.14.4:
     version "1.14.5"
     resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.5.tgz#f09a5848981d3c772b5392309778523f8d85c381"
   
@@ -8878,9 +8898,9 @@ Lockfile:
     version "0.0.1-alpha.0"
     resolved "https://registry.yarnpkg.com/typescript-eslint/-/typescript-eslint-0.0.1-alpha.0.tgz#285d68a4e96588295cd436278801bcb6a6b916c1"
   
-  typescript@^4.4.2:
-    version "4.5.2"
-    resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.2.tgz#8ac1fba9f52256fdb06fb89e4122fa6a346c2998"
+  typescript@4.4.4:
+    version "4.4.4"
+    resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
   
   uid-safe@~2.1.5:
     version "2.1.5"
@@ -9371,3 +9391,4 @@ Trace:
       at ChildProcess.emit (events.js:315:20)
       at maybeClose (internal/child_process.js:1048:16)
       at Process.ChildProcess._handle.onexit (internal/child_process.js:288:5)
+      at Process.callbackTrampoline (internal/async_hooks.js:131:14)

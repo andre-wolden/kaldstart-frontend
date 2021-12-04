@@ -7,7 +7,7 @@ const merge = require('webpack-merge');
 
 const baseConfig = require('./webpack.common.js');
 
-const devConfig = merge.mergeWithRules({
+export const devConfig = merge.mergeWithRules({
     module: {
         rules: {
             test: 'match',
