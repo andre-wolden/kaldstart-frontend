@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js run start:dev
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js start:dev
 
 PATH: 
   /Users/andre.wolden/.cabal/bin:/Users/andre.wolden/.ghcup/bin:/usr/local/opt/postgresql@11/bin:/Users/andre.wolden/Applications/google-cloud-sdk/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/andre.wolden/Applications/maven/bin:/Applications/Sublime Text.app/Contents/MacOS/Packages:/Library/TeX/texbin:/usr/local/share/dotnet:/usr/local/munki:/opt/X11/bin:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/andre.wolden/afroman/:/usr/local/Cellar/postgresql/10.3/bin
@@ -69,7 +69,7 @@ npm manifest:
       "react-toast-notifications": "^2.5.1",
       "request": "^2.88.2",
       "request-promise": "^4.2.5",
-      "styled-components": "^5.3.1",
+      "styled-components": "^5.3.3",
       "uuid": "^8.3.0",
       "winston": "^3.3.3"
     },
@@ -8551,7 +8551,7 @@ Lockfile:
     version "3.3.1"
     resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-3.3.1.tgz#057dfa6b3d4d7c7064462830f9113ed417d38575"
   
-  styled-components@^5, styled-components@^5.3.1:
+  styled-components@^5, styled-components@^5.3.3:
     version "5.3.3"
     resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-5.3.3.tgz#312a3d9a549f4708f0fb0edc829eb34bde032743"
     dependencies:
@@ -9379,7 +9379,7 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 2
+  Exit code: 1
   Command: sh
   Arguments: -c tsc -p tsconfig.backend.json && NODE_ENV=development node node_dist/backend/server.js
   Directory: /Users/andre.wolden/workspace/ory-kaldstart/kaldstart-frontend
@@ -9391,4 +9391,3 @@ Trace:
       at ChildProcess.emit (events.js:315:20)
       at maybeClose (internal/child_process.js:1048:16)
       at Process.ChildProcess._handle.onexit (internal/child_process.js:288:5)
-      at Process.callbackTrampoline (internal/async_hooks.js:131:14)

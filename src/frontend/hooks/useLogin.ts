@@ -1,22 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { useMatch } from 'react-router-dom';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+
+function useQuery() {
+    const { search } = useLocation();
+
+    return useMemo(() => new URLSearchParams(search), [search]);
+}
 
 export const useLogin = () => {
     const [flow, setFlow] = useState<any | string | undefined>(undefined);
     const [hasSetFlow, setHasSetFlow] = useState(false);
 
-    const match = useMatch<'flowId'>('flow=/:flowId');
+    // const match = useMatch<'flowId'>('flow=/:flowId');
+
+    const params = useQuery();
+    const flowParam: string | null = params.get('flow');
+    console.warn(`params: ${JSON.stringify(params)}`);
 
     useEffect(() => {
-        if (flow === undefined && !hasSetFlow) {
-            window.location.href = 'http://127.0.0.1:4455/bff/login';
-            // axios.get('/bff/login').then(res => {
-            //     setFlow(res);
-            // });
-            setHasSetFlow(true);
+        if (flowParam) {
+            setFlow(params.get('flow'));
+            return;
+        } else {
+            axios.get('/bff/login').then(res => {
+                if (res && res.data && res.data.flow) {
+                    setFlow(res.data);
+                } else {
+                    window.location.href = res.data.goto;
+                }
+            });
         }
-    }, [flow, hasSetFlow, match]);
+    }, [flow, hasSetFlow, params]);
 
     return {
         flow,
