@@ -30,6 +30,7 @@ npm manifest:
     },
     "dependencies": {
       "@axe-core/react": "^4.3.1",
+      "@devexperts/remote-data-ts": "^2.1.1",
       "@ory/client": "^0.0.1-alpha.29",
       "@ory/kratos-client": "^0.8.0-alpha.2",
       "@svgr/webpack": "^5.5.0",
@@ -47,8 +48,10 @@ npm manifest:
       "express-http-proxy": "^1.6.0",
       "express-session": "^1.17.1",
       "express-winston": "^4.2.0",
+      "fp-ts": "^2.11.5",
       "http-proxy-middleware": "^1.0.4",
       "https-proxy-agent": "^5.0.0",
+      "io-ts-types": "^0.5.16",
       "lodash.throttle": "^4.1.1",
       "moment-timezone": "^0.5.27",
       "node": "^17.0.1",
@@ -1262,6 +1265,10 @@ Lockfile:
       colorspace "1.1.x"
       enabled "2.0.x"
       kuler "^2.0.0"
+  
+  "@devexperts/remote-data-ts@^2.1.1":
+    version "2.1.1"
+    resolved "https://registry.yarnpkg.com/@devexperts/remote-data-ts/-/remote-data-ts-2.1.1.tgz#feb6aba257c8b4c7478ee3f85ee95f717657e7c3"
   
   "@discoveryjs/json-ext@^0.5.0":
     version "0.5.5"
@@ -4746,6 +4753,10 @@ Lockfile:
     version "0.2.0"
     resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   
+  fp-ts@^2.11.5:
+    version "2.11.5"
+    resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.11.5.tgz#97cceb26655b1452d7088d6fb0864f84cceffbe4"
+  
   fraction.js@^4.1.1:
     version "4.1.2"
     resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.1.2.tgz#13e420a92422b6cf244dff8690ed89401029fbe8"
@@ -5242,6 +5253,10 @@ Lockfile:
   interpret@^2.2.0:
     version "2.2.0"
     resolved "https://registry.yarnpkg.com/interpret/-/interpret-2.2.0.tgz#1a78a0b5965c40a5416d007ad6f50ad27c417df9"
+  
+  io-ts-types@^0.5.16:
+    version "0.5.16"
+    resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.5.16.tgz#e9eed75371e217c97050cc507915e8eedc250946"
   
   ipaddr.js@1.9.1:
     version "1.9.1"

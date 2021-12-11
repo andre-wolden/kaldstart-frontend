@@ -1,3 +1,4 @@
+import { constants } from 'os';
 import path from 'path';
 
 import bodyParser from 'body-parser';
@@ -7,8 +8,10 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
+import { Endpoints } from '../frontend/types/endpoints';
 import { buildPath, hostname, port } from './configuration';
-import { createLoginRoute } from './routes/bff/loginRoute';
+import { getInitFlowUrlApi } from './routes/bff/initFlowUrlApi';
+import { getLoginDataApi } from './routes/bff/loginRoute';
 
 // eslint-disable-next-line
 const webpackDevConfig = require('../webpack/webpack.dev');
@@ -45,7 +48,8 @@ app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
 // app.use('/bff', createBffRoutes(router));
 // app.use('/api', createApiRoutes(router));
 
-app.get('/bff/login', createLoginRoute);
+app.get(Endpoints.BFF_INIT_FLOW_URL, getInitFlowUrlApi);
+app.get(Endpoints.BFF_LOGIN_DATA_API, getLoginDataApi);
 
 /**
  * serve index.html

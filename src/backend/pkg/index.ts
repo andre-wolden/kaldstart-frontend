@@ -1,6 +1,6 @@
 export const removeTrailingSlash = (s: string) => s.replace(/\/$/, '');
 
-export const getUrlForFlow = (base: string, flow: string, query?: URLSearchParams) =>
+export const getUrlForFlow = (base: string, flow: string, query?: URLSearchParams): string =>
     `${removeTrailingSlash(base)}/self-service/${flow}/browser${
         query ? `?${query.toString()}` : ''
     }`;
