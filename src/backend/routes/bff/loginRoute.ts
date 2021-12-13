@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 import { ErrorMessageResponse, LoginDataResponse } from '../../../frontend/types/rest';
 import { kratosPublicBaseUrl } from '../../configuration';
-import { getUrlForFlow, isQuerySet } from '../../pkg';
+import { getUrlForFlow, isQuerySet, redirectOnSoftError } from '../../pkg';
 import { logger } from '../../pkg/logger';
 import { sdk } from '../../pkg/sdk';
 
@@ -54,14 +54,17 @@ export const getLoginDataApi = async (
                 .catch(() => ({ data: { logout_url: '' } }))
         ).data.logout_url || '';
 
-    return sdk.getSelfServiceLoginFlow(flow, req.header('cookie')).then(({ data: flow }) => {
-        res.send(
-            success({
-                ...flow,
-                isAuthenticated: flow.refresh || flow.requested_aal === 'aal2',
-                signUpUrl: initRegistrationUrl,
-                logoutUrl: logoutUrl,
-            })
-        );
-    });
+    return sdk
+        .getSelfServiceLoginFlow(flow, req.header('cookie'))
+        .then(({ data: flow }) => {
+            res.send(
+                success({
+                    ...flow,
+                    isAuthenticated: flow.refresh || flow.requested_aal === 'aal2',
+                    signUpUrl: initRegistrationUrl,
+                    logoutUrl: logoutUrl,
+                })
+            );
+        })
+        .catch(redirectOnSoftError(res, initFlowUrl));
 };

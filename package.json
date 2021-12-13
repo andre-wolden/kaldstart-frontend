@@ -13,7 +13,6 @@
     "lint:fix": "eslint './src/**/*.{js,ts,tsx}' --fix"
   },
   "dependencies": {
-    "@axe-core/react": "^4.3.1",
     "@devexperts/remote-data-ts": "^2.1.1",
     "@ory/client": "^0.0.1-alpha.29",
     "@ory/kratos-client": "^0.8.0-alpha.2",

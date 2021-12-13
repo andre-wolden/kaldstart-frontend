@@ -1,3 +1,5 @@
+import { SelfServiceLoginFlow } from '@ory/client/api';
+
 export interface InitFlowUrlResponse {
     goto: string;
 }
@@ -5,11 +7,10 @@ export interface InitFlowUrlResponse {
 export const isInitFlowUrlResponse = (r: any): r is InitFlowUrlResponse =>
     r && r.goto && typeof r.goto == 'string';
 
-export interface LoginDataResponse {
+export interface LoginDataResponse extends SelfServiceLoginFlow {
     isAuthenticated: boolean;
     signUpUrl: string;
     logoutUrl: string;
-    [key: string]: any;
 }
 
 export const isLoginDataResponse = (r: any): r is LoginDataResponse =>
