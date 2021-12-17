@@ -13,7 +13,7 @@ import {
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
-import { Endpoints } from '../types/endpoints';
+import { Endpoints } from '../../common/endpoints';
 import { ErrorMessageResponse, InitFlowUrlResponse, LoginDataResponse } from '../types/rest';
 
 function useQuery() {

@@ -1,7 +1,7 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "rootDir": ".",
+        "rootDirs": [".", "../common"],
         "module": "esnext",
         "skipLibCheck": true,
         "resolveJsonModule": true,

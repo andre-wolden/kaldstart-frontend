@@ -8,7 +8,7 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import { Endpoints } from '../frontend/types/endpoints';
+import { Endpoints } from '../common/endpoints';
 import { buildPath, hostname, port } from './configuration';
 import { getInitFlowUrlApi } from './routes/bff/initFlowUrlApi';
 import { getLoginDataApi } from './routes/bff/loginRoute';

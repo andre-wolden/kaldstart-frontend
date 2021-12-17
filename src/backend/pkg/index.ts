@@ -1,6 +1,10 @@
 import { AxiosError } from 'axios';
 import { Response } from 'express';
 
+import { kratosPublicBaseUrl } from '../configuration';
+import { RouteOptionsCreator } from './route';
+import { sdk } from './sdk';
+
 export const removeTrailingSlash = (s: string) => s.replace(/\/$/, '');
 
 export const getUrlForFlow = (base: string, flow: string, query?: URLSearchParams): string =>
@@ -21,4 +25,12 @@ export const redirectOnSoftError = (res: Response, redirectTo: string) => (err: 
         res.redirect(`${redirectTo}`);
     }
     return;
+};
+
+export const defaultConfig: RouteOptionsCreator = () => {
+    return {
+        apiBaseUrl: kratosPublicBaseUrl,
+        kratosBrowserUrl: kratosPublicBaseUrl,
+        sdk,
+    };
 };
