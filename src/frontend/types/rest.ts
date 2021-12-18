@@ -1,4 +1,4 @@
-import { SelfServiceLoginFlow } from '@ory/client/api';
+import { SelfServiceLoginFlow, SelfServiceRegistrationFlow } from '@ory/kratos-client';
 
 export interface InitFlowUrlResponse {
     goto: string;
@@ -11,6 +11,10 @@ export interface LoginDataResponse extends SelfServiceLoginFlow {
     isAuthenticated: boolean;
     signUpUrl: string;
     logoutUrl: string;
+}
+
+export interface RegistrationDataResponse extends SelfServiceRegistrationFlow {
+    signInUrl: string;
 }
 
 export const isLoginDataResponse = (r: any): r is LoginDataResponse =>
