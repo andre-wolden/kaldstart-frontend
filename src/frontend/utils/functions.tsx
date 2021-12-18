@@ -1,6 +1,13 @@
-import React, { MouseEventHandler } from 'react';
+import React, { HTMLAttributeReferrerPolicy, MouseEventHandler } from 'react';
 
-import { UiNodeAttributes, UiText } from '@ory/client/api';
+import {
+    UiNodeAnchorAttributes,
+    UiNodeImageAttributes,
+    UiNodeMeta,
+    UiNodeScriptAttributes,
+    UiNodeTextAttributes,
+    UiText,
+} from '@ory/client/api';
 import {
     getNodeLabel,
     isUiNodeAnchorAttributes,
@@ -9,10 +16,27 @@ import {
     isUiNodeScriptAttributes,
     isUiNodeTextAttributes,
 } from '@ory/integrations/ui';
-import { UiNode, UiNodeInputAttributes } from '@ory/kratos-client';
+import { UiNodeAttributes, UiNodeInputAttributes } from '@ory/kratos-client';
+import ReactJson from 'react-json-view';
 
 export const messagesView = (messages: Array<UiText>) =>
     messages.map(message => <div>{message.text}</div>);
+
+interface DefaultAttributes {
+    required: boolean;
+    name: string;
+    type: string;
+    value: string;
+    disabled: boolean;
+}
+
+export interface UiNode {
+    attributes: UiNodeAttributes;
+    group: string;
+    messages: Array<UiText>;
+    meta: UiNodeMeta;
+    type: string;
+}
 
 export const toUiNodePartial = (node: UiNode) => {
     if (isUiNodeAnchorAttributes(node.attributes)) {
@@ -131,13 +155,91 @@ export const toUiNodePartial = (node: UiNode) => {
                     </fieldset>
                 );
             default:
-                return 'ui_node_input_default';
+                return (
+                    <fieldset
+                        className="text-input-fieldset"
+                        data-testid="node/input/{{attributes.name}}"
+                    >
+                        <label>
+                            <span>
+                                {getNodeLabel(node)}
+                                {node.attributes.required && <span>*</span>}
+                            </span>
+                            <input
+                                name={node.attributes.name}
+                                type={node.attributes.type}
+                                value={node.attributes.value}
+                                placeholder={getNodeLabel(node)}
+                                disabled={node.attributes.disabled}
+                            />
+                        </label>
+                        {node.messages && node.messages.length > 0 && (
+                            <div>
+                                {node.messages.map(msg => (
+                                    <span id={msg.id.toString()}>{msg.text}</span>
+                                ))}
+                            </div>
+                        )}
+                    </fieldset>
+                );
         }
     } else if (isUiNodeScriptAttributes(node.attributes)) {
-        return 'ui_node_script';
+        return (
+            <script
+                src={node.attributes.src}
+                type={node.attributes.type}
+                integrity={node.attributes.integrity}
+                referrerPolicy={
+                    node.attributes.referrerpolicy as unknown as HTMLAttributeReferrerPolicy
+                }
+                crossOrigin={node.attributes.crossorigin}
+                async={node.attributes.async}
+            />
+        );
     } else if (isUiNodeTextAttributes(node.attributes)) {
-        return 'ui_node_text';
+        return (
+            <div>
+                <p>{getNodeLabel(node)}</p>
+                {node.attributes.text.id === 1050015 ? (
+                    <div>
+                        {node.attributes.text.context ? (
+                            <ReactJson src={node.attributes.text.context} />
+                        ) : (
+                            <div>node.attributes.text.context is undefined</div>
+                        )}
+                    </div>
+                ) : (
+                    <pre>
+                        <code>{node.attributes.text.text}</code>
+                    </pre>
+                )}
+            </div>
+        );
     }
 
-    return 'ui_node_input_default';
+    const attr = node.attributes as DefaultAttributes;
+    return (
+        <fieldset>
+            <label>
+                <span>
+                    {getNodeLabel(node)}
+                    {attr.required && <span className="required-indicator">*</span>}
+                </span>
+                <input
+                    name={attr.name}
+                    type={attr.type}
+                    value={attr.value}
+                    placeholder={getNodeLabel(node)}
+                    disabled={attr.disabled}
+                />
+            </label>
+            {node.messages && node.messages.length > 0 && (
+                <div>
+                    {node.messages.map(msg => (
+                        <span id={msg.id.toString()}>{msg.text}</span>
+                    ))}
+                </div>
+            )}
+        </fieldset>
+    );
 };
