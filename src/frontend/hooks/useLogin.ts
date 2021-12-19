@@ -34,7 +34,7 @@ export const useLogin = (): LoginData => {
     useEffect(() => {
         if (isInitial(remoteOryResponse)) {
             setRemoteOryResponse(pending);
-            fetchOryResponse(queryParams, Endpoints.BFF_LOGIN_DATA_API)
+            fetchOryResponse(queryParams, Endpoints.BFF_LOGIN_DATA_API, { withCredentials: true })
                 .then(({ data: oryResponse }: AxiosResponse<OryResponse>) => {
                     if (isOryFlowRedirect(oryResponse)) {
                         window.location.href = oryResponse.redirectTo;

@@ -10,6 +10,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import { buildPath, hostname, port } from '../common/configuration';
 import { Endpoints } from '../common/endpoints';
+import { setSession } from './pkg/middleware';
 import { getLoginDataApi } from './routes/bff/loginRoute';
 import { getRegistrationDataApi } from './routes/bff/registrationRoute';
 import { getWelcomeRoute } from './routes/bff/welcomeRoute';
@@ -49,9 +50,10 @@ app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
 // app.use('/bff', createBffRoutes(router));
 // app.use('/api', createApiRoutes(router));
 
+app.use(Endpoints.BFF, setSession);
 app.get(Endpoints.BFF_LOGIN_DATA_API, getLoginDataApi);
 app.get(Endpoints.BFF_SIGNUP_DATA_API, getRegistrationDataApi);
-app.get(Endpoints.BFF_SIGNUP_DATA_API, getWelcomeRoute);
+app.get(Endpoints.BFF_WELCOME_DATA_API, getWelcomeRoute);
 
 /**
  * serve index.html

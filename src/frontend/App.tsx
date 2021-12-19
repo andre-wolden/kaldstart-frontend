@@ -7,10 +7,11 @@ import { AuthenticationWrapper } from './components/AuthenticationWrapper';
 import { PrivateNotes } from './components/PrivateNotes';
 import { IndexView } from './views/IndexView';
 import { LoginView } from './views/LoginView';
+import { LogoutButton } from './views/LogoutButton';
 import { NotFoundView } from './views/NotFoundView';
 import './app.less';
 import { RegistrationView } from './views/RegistrationView';
-import { WelcomeView } from './views/Welcome';
+import { WelcomeView } from './views/WelcomeView';
 
 const Header = styled.div`
     border: 1px dotted red;

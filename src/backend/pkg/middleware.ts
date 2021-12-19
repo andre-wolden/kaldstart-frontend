@@ -2,7 +2,9 @@ import { Session } from '@ory/kratos-client';
 import { AxiosError } from 'axios';
 import { NextFunction, Request, Response } from 'express';
 
+import { kratosPublicBaseUrl } from '../../common/configuration';
 import { RouteOptionsCreator } from './route';
+import { sdk } from './sdk';
 
 import { getUrlForFlow } from './index';
 
@@ -45,20 +47,18 @@ const addSessionToRequest =
  *
  * @param createHelpers
  */
-export const requireAuth =
-    (createHelpers: RouteOptionsCreator) => (req: Request, res: Response, next: NextFunction) => {
-        const { sdk, apiBaseUrl } = createHelpers(req);
-        sdk.toSession(undefined, req.header('cookie'))
-            .then(addSessionToRequest(req))
-            .then(() => next())
-            .catch((err: AxiosError) => {
-                // 403 on toSession means that we need to request 2FA
-                if (!maybeInitiate2FA(res, apiBaseUrl)(err)) {
-                    // If no session is found, redirect to login.
-                    res.redirect(getUrlForFlow(apiBaseUrl, 'login'));
-                }
-            });
-    };
+export const requireAuth = (req: Request, res: Response, next: NextFunction) => {
+    sdk.toSession(undefined, req.header('cookie'))
+        .then(addSessionToRequest(req))
+        .then(() => next())
+        .catch((err: AxiosError) => {
+            // 403 on toSession means that we need to request 2FA
+            if (!maybeInitiate2FA(res, kratosPublicBaseUrl)(err)) {
+                // If no session is found, redirect to login.
+                res.redirect(getUrlForFlow(kratosPublicBaseUrl, 'login'));
+            }
+        });
+};
 
 /**
  * Sets the session in the request. If no session is found,
@@ -68,18 +68,16 @@ export const requireAuth =
  *
  * @param createHelpers
  */
-export const setSession =
-    (createHelpers: RouteOptionsCreator) => (req: Request, res: Response, next: NextFunction) => {
-        const { sdk, apiBaseUrl } = createHelpers(req);
-        sdk.toSession(undefined, req.header('cookie'))
-            .then(res => {
-                addSessionToRequest(req)(res);
-            })
-            .catch(maybeInitiate2FA(res, apiBaseUrl))
-            .then(() => {
-                next();
-            });
-    };
+export const setSession = (req: Request, res: Response, next: NextFunction) => {
+    sdk.toSession(undefined, req.header('cookie'))
+        .then(res => {
+            addSessionToRequest(req)(res);
+        })
+        .catch(maybeInitiate2FA(res, kratosPublicBaseUrl))
+        .then(() => {
+            next();
+        });
+};
 
 /**
  * This middleware requires that the HTTP request has no session.

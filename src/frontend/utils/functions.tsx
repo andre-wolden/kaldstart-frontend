@@ -175,7 +175,6 @@ export const toUiNodePartial = (node: UiNode) => {
                             <input
                                 name={node.attributes.name}
                                 type={node.attributes.type}
-                                value={node.attributes.value}
                                 placeholder={getNodeLabel(node)}
                                 disabled={node.attributes.disabled}
                             />

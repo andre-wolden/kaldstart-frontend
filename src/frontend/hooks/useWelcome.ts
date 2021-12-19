@@ -11,13 +11,7 @@ import {
 import { AxiosError, AxiosResponse } from 'axios';
 
 import { Endpoints } from '../../common/endpoints';
-import {
-    isOryFlowRedirect,
-    isOryInitiateLoginResponse,
-    isOryWelcomeData,
-    OryResponse,
-    OryWelcomeResponse,
-} from '../types/rest';
+import { isOryFlowRedirect, isOryWelcomeData, OryResponse } from '../types/rest';
 import { fetchOryResponse } from '../utils/api';
 import { useQuery } from '../utils/functions';
 

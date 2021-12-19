@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { useRegistration } from '../hooks/useRegistration';
 import { isOryFlowRedirect, isOryInitiateRegistrationResponse, OryResponse } from '../types/rest';
+import { LogoutButton } from './LogoutButton';
 import { RegistrationPartialView } from './RegistrationPartialView';
 
 export const RegistrationView: React.FC = () => {

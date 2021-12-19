@@ -46,7 +46,11 @@ export type OryInitiateRegistrationResponse = {
 
 export type OryWelcomeResponse = {
     readonly type: 'OryWelcomeResponse';
-    readonly data: any;
+    readonly data: {
+        session: any;
+        hasSession: boolean;
+        logoutUrl: string;
+    };
 };
 
 export type OryResponse =

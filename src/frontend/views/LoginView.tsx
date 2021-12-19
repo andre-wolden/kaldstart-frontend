@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useLogin } from '../hooks/useLogin';
 import { isOryFlowRedirect, isOryInitiateLoginResponse, OryResponse } from '../types/rest';
 import { LoginPartialView } from './LoginPartialView';
+import { LogoutButton } from './LogoutButton';
 
 export const LoginView: React.FC = () => {
     const { remoteOryResponse } = useLogin();
@@ -26,6 +27,9 @@ export const LoginView: React.FC = () => {
                             return (
                                 <div>
                                     <LoginPartialView data={oryResponse.data} />
+                                    <p>
+                                        <LogoutButton logoutUrl={oryResponse.data.logoutUrl} />
+                                    </p>
                                 </div>
                             );
                         }
