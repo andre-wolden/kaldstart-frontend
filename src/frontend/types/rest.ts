@@ -23,3 +23,36 @@ export const isLoginDataResponse = (r: any): r is LoginDataResponse =>
 export interface ErrorMessageResponse {
     message: string;
 }
+
+/**
+ * Disjoint union ory respone
+ */
+
+export type OryFlowRedirect = {
+    readonly type: 'OryFlowRedirect';
+    readonly redirectTo: string;
+    readonly message?: string;
+};
+
+export type OryInitiateLoginResponse = {
+    readonly type: 'OryInitiateLoginResponse';
+    readonly data: LoginDataResponse;
+};
+
+export type OryResponse = OryFlowRedirect | OryInitiateLoginResponse;
+
+export const oryFlowRedirect = (redirectTo: string, message?: string): OryResponse => ({
+    type: 'OryFlowRedirect',
+    redirectTo,
+    message,
+});
+export const isOryFlowRedirect = (response: OryResponse): response is OryFlowRedirect =>
+    response.type === 'OryFlowRedirect';
+
+export const oryInitiateLoginResponse = (data: LoginDataResponse): OryResponse => ({
+    type: 'OryInitiateLoginResponse',
+    data,
+});
+export const isOryInitiateLoginResponse = (
+    response: OryResponse
+): response is OryInitiateLoginResponse => response.type === 'OryInitiateLoginResponse';

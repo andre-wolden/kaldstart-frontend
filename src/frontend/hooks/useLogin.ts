@@ -4,79 +4,55 @@ import {
     failure,
     initial,
     isInitial,
-    isSuccess,
     pending,
-    // eslint-disable-next-line import/named
     RemoteData,
     success,
 } from '@devexperts/remote-data-ts';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useLocation } from 'react-router-dom';
 
 import { Endpoints } from '../../common/endpoints';
-import { ErrorMessageResponse, InitFlowUrlResponse, LoginDataResponse } from '../types/rest';
+import { isOryFlowRedirect, isOryInitiateLoginResponse, OryResponse } from '../types/rest';
 
 function useQuery() {
     const { search } = useLocation();
-
     return useMemo(() => new URLSearchParams(search), [search]);
 }
 
-const fetchAsyncInitFlowUrlResponse = async (): Promise<
-    RemoteData<ErrorMessageResponse, InitFlowUrlResponse>
-> =>
-    axios
-        .get<RemoteData<ErrorMessageResponse, InitFlowUrlResponse>>(Endpoints.BFF_INIT_FLOW_URL)
-        .then(res => res.data)
-        .catch(e => failure({ message: JSON.stringify(e) }));
+const fetchAsyncInitFlowUrlResponse = async (
+    queryParams: string
+): Promise<AxiosResponse<OryResponse, any>> =>
+    axios.get<OryResponse>(`${Endpoints.BFF_LOGIN_DATA_API}?${queryParams}`);
 
-const fetchAsyncLoginDataResponse = async (
-    flow: string
-): Promise<RemoteData<ErrorMessageResponse, LoginDataResponse>> =>
-    axios
-        .get<RemoteData<ErrorMessageResponse, LoginDataResponse>>(
-            `${Endpoints.BFF_LOGIN_DATA_API}?flow=${flow}`
-        )
-        .then(res => res.data)
-        .catch(e => failure({ message: JSON.stringify(e) }));
+interface LoginData {
+    remoteOryResponse: RemoteData<AxiosError, OryResponse>;
+}
 
-const doNothing = () => {
-    return;
-};
+export const useLogin = (): LoginData => {
+    const params: URLSearchParams = useQuery();
+    const queryParams = params.toString();
 
-export const useLogin = () => {
-    const params = useQuery();
-    const flow: string | null = params.get('flow');
-
-    const [initFlowUrl, setInitFlowUrl] = useState<
-        RemoteData<ErrorMessageResponse, InitFlowUrlResponse>
-    >(flow ? success({ goto: '' }) : initial);
-    useState<RemoteData<ErrorMessageResponse, LoginDataResponse>>(initial);
-
-    const [loginDataResponse, setLoginDataResponse] =
-        useState<RemoteData<ErrorMessageResponse, LoginDataResponse>>(initial);
+    const [remoteOryResponse, setRemoteOryResponse] =
+        useState<RemoteData<AxiosError, OryResponse>>(initial);
 
     useEffect(() => {
-        if (isInitial(initFlowUrl) && flow === null) {
-            setInitFlowUrl(pending);
-            fetchAsyncInitFlowUrlResponse().then(
-                (res: RemoteData<ErrorMessageResponse, InitFlowUrlResponse>) => {
-                    if (isSuccess(res)) {
-                        window.location.href = res.value.goto;
+        if (isInitial(remoteOryResponse)) {
+            setRemoteOryResponse(pending);
+            fetchAsyncInitFlowUrlResponse(queryParams)
+                .then(({ data: oryResponse }: AxiosResponse<OryResponse>) => {
+                    if (isOryFlowRedirect(oryResponse)) {
+                        window.location.href = oryResponse.redirectTo;
+                    } else if (isOryInitiateLoginResponse(oryResponse)) {
+                        setRemoteOryResponse(success(oryResponse));
+                    } else {
+                        // TODO: Log error! shouldn't be possible
                     }
-                    setInitFlowUrl(res);
-                }
-            );
+                })
+                .catch((e: AxiosError) => setRemoteOryResponse(failure(e)));
         }
-        if (flow && isInitial(loginDataResponse)) {
-            setLoginDataResponse(pending);
-            fetchAsyncLoginDataResponse(flow).then(setLoginDataResponse);
-        }
-    }, [flow, params]);
+    }, [remoteOryResponse, params]);
 
     return {
-        flow,
-        initFlowUrl,
-        loginDataResponse,
+        remoteOryResponse,
     };
 };

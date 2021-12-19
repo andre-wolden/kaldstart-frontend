@@ -1,7 +1,12 @@
-import { failure, RemoteData, success } from '@devexperts/remote-data-ts';
+import { RemoteData, success } from '@devexperts/remote-data-ts';
 import { Request, Response } from 'express';
 
-import { ErrorMessageResponse, LoginDataResponse } from '../../../frontend/types/rest';
+import {
+    ErrorMessageResponse,
+    oryFlowRedirect,
+    oryInitiateLoginResponse,
+    OryResponse,
+} from '../../../frontend/types/rest';
 import { kratosPublicBaseUrl } from '../../configuration';
 import { getUrlForFlow, isQuerySet, redirectOnSoftError } from '../../pkg';
 import { logger } from '../../pkg/logger';
@@ -9,7 +14,7 @@ import { sdk } from '../../pkg/sdk';
 
 export const getLoginDataApi = async (
     req: Request,
-    res: Response<RemoteData<ErrorMessageResponse, LoginDataResponse>>
+    res: Response<ErrorMessageResponse | OryResponse>
 ) => {
     const { flow, aal = '', refresh = '', return_to = '' } = req.query;
     const initFlowUrl = getUrlForFlow(
@@ -36,11 +41,7 @@ export const getLoginDataApi = async (
         logger.debug('No flow ID found in URL query initializing login flow', {
             query: req.query,
         });
-        res.send(
-            failure({
-                message: 'No flow ID found in URL query initializing login flow',
-            })
-        );
+        res.send(oryFlowRedirect(initFlowUrl, 'No flow. Go get in the flow.'));
         return;
     }
 
@@ -58,7 +59,7 @@ export const getLoginDataApi = async (
         .getSelfServiceLoginFlow(flow, req.header('cookie'))
         .then(({ data: flow }) => {
             res.send(
-                success({
+                oryInitiateLoginResponse({
                     ...flow,
                     isAuthenticated: flow.refresh || flow.requested_aal === 'aal2',
                     signUpUrl: initRegistrationUrl,
