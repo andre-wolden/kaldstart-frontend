@@ -18,7 +18,9 @@ export const RegistrationPartialView: React.FC<Props> = props => {
 
                 {data.ui.messages && <Messages messages={data.ui.messages} />}
 
-                {data.ui.nodes.map(node => toUiNodePartial(node))}
+                <form action={data.ui.action} method={data.ui.method}>
+                    {data.ui.nodes.map(node => toUiNodePartial(node))}
+                </form>
             </div>
             <div>
                 <a href={data.signInUrl}>Sign in</a>

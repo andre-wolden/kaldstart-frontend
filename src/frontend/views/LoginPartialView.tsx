@@ -26,7 +26,9 @@ export const LoginPartialView: React.FC<Props> = props => {
                 {insertHeader()}
                 {data.ui.messages && <Messages messages={data.ui.messages} />}
 
-                {data.ui.nodes.map(node => toUiNodePartial(node))}
+                <form action={data.ui.action} method={data.ui.method}>
+                    {data.ui.nodes.map(node => toUiNodePartial(node))}
+                </form>
 
                 {data.isAuthenticated ? (
                     <div>
