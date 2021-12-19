@@ -9,6 +9,7 @@ import { IndexView } from './views/IndexView';
 import { LoginView } from './views/LoginView';
 import { NotFoundView } from './views/NotFoundView';
 import './app.less';
+import { SignUpView } from './views/SignUpView';
 
 const Header = styled.div`
     border: 1px dotted red;
@@ -23,7 +24,7 @@ const App: React.FC = () => {
             <Router>
                 <Routes>
                     <Route path={'/login'} element={<LoginView />} />
-                    {/*<Route path={'/signup'} element={<SignupView />} />*/}
+                    <Route path={'/signup'} element={<SignUpView />} />
                     <Route
                         path={'/private'}
                         element={

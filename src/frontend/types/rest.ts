@@ -13,6 +13,10 @@ export interface LoginDataResponse extends SelfServiceLoginFlow {
     logoutUrl: string;
 }
 
+export interface SignUpDataResponse extends SelfServiceRegistrationFlow {
+    signInUrl: string;
+}
+
 export interface RegistrationDataResponse extends SelfServiceRegistrationFlow {
     signInUrl: string;
 }
@@ -39,7 +43,12 @@ export type OryInitiateLoginResponse = {
     readonly data: LoginDataResponse;
 };
 
-export type OryResponse = OryFlowRedirect | OryInitiateLoginResponse;
+export type OryInitiateSignUpResponse = {
+    readonly type: 'OryInitiateSignUpResponse';
+    readonly data: SignUpDataResponse;
+};
+
+export type OryResponse = OryFlowRedirect | OryInitiateLoginResponse | OryInitiateSignUpResponse;
 
 export const oryFlowRedirect = (redirectTo: string, message?: string): OryResponse => ({
     type: 'OryFlowRedirect',
@@ -56,3 +65,11 @@ export const oryInitiateLoginResponse = (data: LoginDataResponse): OryResponse =
 export const isOryInitiateLoginResponse = (
     response: OryResponse
 ): response is OryInitiateLoginResponse => response.type === 'OryInitiateLoginResponse';
+
+export const oryInitiateSignUpResponse = (data: SignUpDataResponse): OryResponse => ({
+    type: 'OryInitiateSignUpResponse',
+    data,
+});
+export const isOryInitiateSignUpResponse = (
+    response: OryResponse
+): response is OryInitiateSignUpResponse => response.type === 'OryInitiateSignUpResponse';
