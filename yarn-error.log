@@ -10373,7 +10373,7 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 2
+  Exit code: 1
   Command: sh
   Arguments: -c tsc -p tsconfig.backend.json && NODE_ENV=development node node_dist/backend/server.js
   Directory: /Users/andre.wolden/workspace/ory-kaldstart/kaldstart-frontend

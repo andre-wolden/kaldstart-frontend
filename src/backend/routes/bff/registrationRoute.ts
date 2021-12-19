@@ -1,17 +1,18 @@
 import { Request, Response } from 'express';
 
+import { kratosPublicBaseUrl } from '../../../common/configuration';
 import {
     ErrorMessageResponse,
     oryFlowRedirect,
     oryInitiateLoginResponse,
+    oryInitiateRegistrationResponse,
     OryResponse,
 } from '../../../frontend/types/rest';
-import { kratosPublicBaseUrl } from '../../configuration';
 import { getUrlForFlow, isQuerySet, redirectOnSoftError } from '../../pkg';
 import { logger } from '../../pkg/logger';
 import { sdk } from '../../pkg/sdk';
 
-export const getSignUpDataApi = async (req: Request, res: Response<OryResponse>) => {
+export const getRegistrationDataApi = async (req: Request, res: Response<OryResponse>) => {
     res.locals.projectName = 'Create account';
 
     const { flow, return_to = '' } = req.query;
@@ -40,11 +41,12 @@ export const getSignUpDataApi = async (req: Request, res: Response<OryResponse>)
 
     sdk.getSelfServiceRegistrationFlow(flow, req.header('Cookie'))
         .then(({ data: flow }) => {
-            // Render the data using a view (e.g. Jade Template):
-            res.render('registration', {
-                ...flow,
-                signInUrl: initLoginUrl,
-            });
+            res.send(
+                oryInitiateRegistrationResponse({
+                    ...flow,
+                    signInUrl: initLoginUrl,
+                })
+            );
         })
         .catch(redirectOnSoftError(res, initFlowUrl));
 };

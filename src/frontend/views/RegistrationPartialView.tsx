@@ -1,32 +1,27 @@
 import React from 'react';
 
 import { RegistrationDataResponse } from '../types/rest';
+import { toUiNodePartial } from '../utils/functions';
+import { Messages } from './Messages';
 
 interface Props {
     data: RegistrationDataResponse;
 }
 
-const RegistrationPartialView: React.FC<Props> = props => {
+export const RegistrationPartialView: React.FC<Props> = props => {
     const { data } = props;
+
     return (
-        <div id="signup">
-            <div>
+        <div className="auth app-container" id="signup">
+            <div className="card">
                 <h2>Create an account</h2>
 
-                {/*{{ > messages messages=messages className="global"}}*/}
+                {data.ui.messages && <Messages messages={data.ui.messages} />}
 
-                {/*{{ > ui ui=ui}}*/}
+                {data.ui.nodes.map(node => toUiNodePartial(node))}
             </div>
-            <div className="card">
-                <div className="card-action">
-                    <a
-                        className="typography-link typography-h2"
-                        data-testid="cta-link"
-                        href="{{signInUrl}}"
-                    >
-                        Sign in
-                    </a>
-                </div>
+            <div>
+                <a href={data.signInUrl}>Sign in</a>
             </div>
         </div>
     );

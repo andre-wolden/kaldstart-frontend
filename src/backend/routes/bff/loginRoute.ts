@@ -1,13 +1,13 @@
 import { RemoteData, success } from '@devexperts/remote-data-ts';
 import { Request, Response } from 'express';
 
+import { kratosPublicBaseUrl } from '../../../common/configuration';
 import {
     ErrorMessageResponse,
     oryFlowRedirect,
     oryInitiateLoginResponse,
     OryResponse,
 } from '../../../frontend/types/rest';
-import { kratosPublicBaseUrl } from '../../configuration';
 import { getUrlForFlow, isQuerySet, redirectOnSoftError } from '../../pkg';
 import { logger } from '../../pkg/logger';
 import { sdk } from '../../pkg/sdk';

@@ -2,12 +2,12 @@ import React from 'react';
 
 import { fold } from '@devexperts/remote-data-ts';
 
-import { useSignUp } from '../hooks/useSignUp';
-import { isOryFlowRedirect, isOryInitiateSignUpResponse, OryResponse } from '../types/rest';
-import { SignUpPartialView } from './SignUpPartialView';
+import { useRegistration } from '../hooks/useRegistration';
+import { isOryFlowRedirect, isOryInitiateRegistrationResponse, OryResponse } from '../types/rest';
+import { RegistrationPartialView } from './RegistrationPartialView';
 
-export const SignUpView: React.FC = () => {
-    const { remoteOrySignUpResponse } = useSignUp();
+export const RegistrationView: React.FC = () => {
+    const { remoteOryRegistrationResponse } = useRegistration();
 
     return (
         <div>
@@ -20,15 +20,15 @@ export const SignUpView: React.FC = () => {
                     if (isOryFlowRedirect(oryResponse)) {
                         return <div>redirecting...</div>;
                     }
-                    if (isOryInitiateSignUpResponse(oryResponse)) {
+                    if (isOryInitiateRegistrationResponse(oryResponse)) {
                         return (
                             <div>
-                                <SignUpPartialView data={oryResponse.data} />
+                                <RegistrationPartialView data={oryResponse.data} />
                             </div>
                         );
                     }
                 }
-            )(remoteOrySignUpResponse)}
+            )(remoteOryRegistrationResponse)}
         </div>
     );
 };

@@ -7,6 +7,6 @@ export const fetchOryResponse = async (
     queryParams: string,
     path: Endpoints
 ): Promise<AxiosResponse<OryResponse>> => {
-    const queryString = queryParams !== '' ? `? ${queryParams}` : '';
+    const queryString = queryParams !== '' ? `?${queryParams}` : '';
     return axios.get<OryResponse>(`${path}${queryString}`);
 };

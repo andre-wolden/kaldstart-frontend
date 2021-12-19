@@ -11,7 +11,7 @@ export const IndexView = () => {
                 <Link to={'/login'}>Log in</Link>
             </p>
             <p>
-                <Link to={'/signup'}>Sign up</Link>
+                <Link to={'/registration'}>Sign up</Link>
             </p>
         </div>
     );

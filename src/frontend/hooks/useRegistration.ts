@@ -15,7 +15,7 @@ import { Endpoints } from '../../common/endpoints';
 import {
     isOryFlowRedirect,
     isOryInitiateLoginResponse,
-    isOryInitiateSignUpResponse,
+    isOryInitiateRegistrationResponse,
     OryResponse,
 } from '../types/rest';
 import { fetchOryResponse } from '../utils/api';
@@ -26,25 +26,24 @@ function useQuery() {
 }
 
 export interface SignUpData {
-    remoteOrySignUpResponse: RemoteData<AxiosError, OryResponse>;
+    remoteOryRegistrationResponse: RemoteData<AxiosError, OryResponse>;
 }
 
-export const useSignUp = (): SignUpData => {
+export const useRegistration = (): SignUpData => {
     const params: URLSearchParams = useQuery();
-    params.append('return_to', 'signup');
     const queryParams = params.toString();
 
-    const [remoteOrySignUpResponse, setRemoteOrySignUpResponse] =
+    const [remoteOryRegistrationResponse, setRemoteOrySignUpResponse] =
         useState<RemoteData<AxiosError, OryResponse>>(initial);
 
     useEffect(() => {
-        if (isInitial(remoteOrySignUpResponse)) {
+        if (isInitial(remoteOryRegistrationResponse)) {
             setRemoteOrySignUpResponse(pending);
             fetchOryResponse(queryParams, Endpoints.BFF_SIGNUP_DATA_API)
                 .then(({ data: oryResponse }: AxiosResponse<OryResponse>) => {
                     if (isOryFlowRedirect(oryResponse)) {
                         window.location.href = oryResponse.redirectTo;
-                    } else if (isOryInitiateSignUpResponse(oryResponse)) {
+                    } else if (isOryInitiateRegistrationResponse(oryResponse)) {
                         setRemoteOrySignUpResponse(success(oryResponse));
                     } else {
                         // TODO: Log error! shouldn't be possible
@@ -52,9 +51,9 @@ export const useSignUp = (): SignUpData => {
                 })
                 .catch((e: AxiosError) => setRemoteOrySignUpResponse(failure(e)));
         }
-    }, [remoteOrySignUpResponse, params]);
+    }, [remoteOryRegistrationResponse, params]);
 
     return {
-        remoteOrySignUpResponse,
+        remoteOryRegistrationResponse,
     };
 };

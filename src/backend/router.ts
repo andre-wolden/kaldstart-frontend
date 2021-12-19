@@ -2,7 +2,7 @@ import path from 'path';
 
 import { Response, Request, Router } from 'express';
 
-import { buildPath } from './configuration';
+import { buildPath } from '../common/configuration';
 import { createMessagesRoute } from './routes/api';
 import { getLoginDataApi } from './routes/bff/loginRoute';
 

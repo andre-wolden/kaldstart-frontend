@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { Response } from 'express';
 
-import { kratosPublicBaseUrl } from '../configuration';
+import { kratosPublicBaseUrl } from '../../common/configuration';
 import { RouteOptionsCreator } from './route';
 import { sdk } from './sdk';
 
