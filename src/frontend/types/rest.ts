@@ -44,10 +44,16 @@ export type OryInitiateRegistrationResponse = {
     readonly data: RegistrationDataResponse;
 };
 
+export type OryWelcomeResponse = {
+    readonly type: 'OryWelcomeResponse';
+    readonly data: any;
+};
+
 export type OryResponse =
     | OryFlowRedirect
     | OryInitiateLoginResponse
-    | OryInitiateRegistrationResponse;
+    | OryInitiateRegistrationResponse
+    | OryWelcomeResponse;
 
 export const oryFlowRedirect = (redirectTo: string, message?: string): OryResponse => ({
     type: 'OryFlowRedirect',
@@ -73,3 +79,11 @@ export const isOryInitiateRegistrationResponse = (
     response: OryResponse
 ): response is OryInitiateRegistrationResponse =>
     response.type === 'OryInitiateRegistrationResponse';
+
+export const oryWelcomeResponse = (data: any): OryWelcomeResponse => ({
+    type: 'OryWelcomeResponse',
+    data,
+});
+
+export const isOryWelcomeData = (response: OryResponse): response is OryWelcomeResponse =>
+    response.type === 'OryWelcomeResponse';

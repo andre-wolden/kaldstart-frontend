@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { fold } from '@devexperts/remote-data-ts';
+import { Link } from 'react-router-dom';
 
 import { useRegistration } from '../hooks/useRegistration';
 import { isOryFlowRedirect, isOryInitiateRegistrationResponse, OryResponse } from '../types/rest';
@@ -12,23 +13,29 @@ export const RegistrationView: React.FC = () => {
     return (
         <div>
             <div>Sign up</div>
-            {fold(
-                () => <div>Initial...</div>,
-                () => <div>Pending...</div>,
-                error => <div>{JSON.stringify(error)}</div>,
-                (oryResponse: OryResponse) => {
-                    if (isOryFlowRedirect(oryResponse)) {
-                        return <div>redirecting...</div>;
+            <p>
+                {fold(
+                    () => <div>Initial...</div>,
+                    () => <div>Pending...</div>,
+                    error => <div>{JSON.stringify(error)}</div>,
+                    (oryResponse: OryResponse) => {
+                        if (isOryFlowRedirect(oryResponse)) {
+                            return <div>redirecting...</div>;
+                        }
+                        if (isOryInitiateRegistrationResponse(oryResponse)) {
+                            return (
+                                <div>
+                                    <RegistrationPartialView data={oryResponse.data} />
+                                </div>
+                            );
+                        }
                     }
-                    if (isOryInitiateRegistrationResponse(oryResponse)) {
-                        return (
-                            <div>
-                                <RegistrationPartialView data={oryResponse.data} />
-                            </div>
-                        );
-                    }
-                }
-            )(remoteOryRegistrationResponse)}
+                )(remoteOryRegistrationResponse)}
+            </p>
+
+            <p>
+                <Link to={'/'}>Home</Link>
+            </p>
         </div>
     );
 };

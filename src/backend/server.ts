@@ -12,6 +12,7 @@ import { buildPath, hostname, port } from '../common/configuration';
 import { Endpoints } from '../common/endpoints';
 import { getLoginDataApi } from './routes/bff/loginRoute';
 import { getRegistrationDataApi } from './routes/bff/registrationRoute';
+import { getWelcomeRoute } from './routes/bff/welcomeRoute';
 
 // eslint-disable-next-line
 const webpackDevConfig = require('../webpack/webpack.dev');
@@ -50,6 +51,7 @@ app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
 
 app.get(Endpoints.BFF_LOGIN_DATA_API, getLoginDataApi);
 app.get(Endpoints.BFF_SIGNUP_DATA_API, getRegistrationDataApi);
+app.get(Endpoints.BFF_SIGNUP_DATA_API, getWelcomeRoute);
 
 /**
  * serve index.html

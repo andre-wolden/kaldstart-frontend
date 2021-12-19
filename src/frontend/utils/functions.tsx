@@ -1,4 +1,4 @@
-import React, { HTMLAttributeReferrerPolicy, MouseEventHandler } from 'react';
+import React, { HTMLAttributeReferrerPolicy, MouseEventHandler, useMemo } from 'react';
 
 import {
     UiNodeAnchorAttributes,
@@ -18,9 +18,15 @@ import {
 } from '@ory/integrations/ui';
 import { UiNodeAttributes, UiNodeInputAttributes } from '@ory/kratos-client';
 import ReactJson from 'react-json-view';
+import { useLocation } from 'react-router-dom';
 
 export const messagesView = (messages: Array<UiText>) =>
     messages.map(message => <div>{message.text}</div>);
+
+export const useQuery = () => {
+    const { search } = useLocation();
+    return useMemo(() => new URLSearchParams(search), [search]);
+};
 
 interface DefaultAttributes {
     required: boolean;
@@ -165,6 +171,7 @@ export const toUiNodePartial = (node: UiNode) => {
                                 {getNodeLabel(node)}
                                 {node.attributes.required && <span>*</span>}
                             </span>
+                            this is the input
                             <input
                                 name={node.attributes.name}
                                 type={node.attributes.type}
@@ -225,6 +232,7 @@ export const toUiNodePartial = (node: UiNode) => {
                     {getNodeLabel(node)}
                     {attr.required && <span className="required-indicator">*</span>}
                 </span>
+                registrate works perhaps
                 <input
                     name={attr.name}
                     type={attr.type}

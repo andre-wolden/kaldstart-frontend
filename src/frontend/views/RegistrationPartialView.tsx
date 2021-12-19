@@ -12,8 +12,8 @@ export const RegistrationPartialView: React.FC<Props> = props => {
     const { data } = props;
 
     return (
-        <div className="auth app-container" id="signup">
-            <div className="card">
+        <div>
+            <div>
                 <h2>Create an account</h2>
 
                 {data.ui.messages && <Messages messages={data.ui.messages} />}

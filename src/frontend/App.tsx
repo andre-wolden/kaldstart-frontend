@@ -10,6 +10,7 @@ import { LoginView } from './views/LoginView';
 import { NotFoundView } from './views/NotFoundView';
 import './app.less';
 import { RegistrationView } from './views/RegistrationView';
+import { WelcomeView } from './views/Welcome';
 
 const Header = styled.div`
     border: 1px dotted red;
@@ -25,6 +26,7 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path={'/login'} element={<LoginView />} />
                     <Route path={'/registration'} element={<RegistrationView />} />
+                    <Route path={'/welcome'} element={<WelcomeView />} />
                     <Route
                         path={'/private'}
                         element={

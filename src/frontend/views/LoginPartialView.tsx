@@ -21,8 +21,8 @@ export const LoginPartialView: React.FC<Props> = props => {
     };
 
     return (
-        <div className="auth app-container" id="login">
-            <div className="card">
+        <div>
+            <div>
                 {insertHeader()}
                 {data.ui.messages && <Messages messages={data.ui.messages} />}
 
